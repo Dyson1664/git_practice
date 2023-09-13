@@ -5,3 +5,6 @@ for i in 'balls of fire':
 
 print('u d man')
 
+total = 8
+f = total * 3
+print(f)
