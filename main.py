@@ -1,45 +1,31 @@
-print('good morning vietnam')
+from flask import Flask, request, jsonify
 
-for i in 'balls of fire':
-    print(i)
-
-print('u d man')
-
-total = 8
-f = total * 3
-print(f)
-
-# def divide_numbers(a, b):
-#     try:
-#         a = int(input('Enter a number'))
-#         b = int(input('Enter a number '))
-#
-#         answer = a / b
-#
-#
-#     except (ValueError, ZeroDivisionError):
-#         answer = 'An error occured'
-#
-#
-#     return answer
-#
-# print(divide_numbers(10, 2))
-
-def divide_numbers2():
-    while True:
-        try:
-            c = int(input('Enter a number: '))
-            d = int(input('Enter a number: '))
-
-            ans = c / d
-            return ans
-
-        except ValueError as e:
-            print(f'Error was {e}. Please enter a number')
-
-        except ZeroDivisionError as e:
-            print(f'Error was {e}. Cant divide by zero. silly')
+app = Flask(__name__)
 
 
+@app.route("/get-user/<user_id>")
+def get_user(user_id):
+    user_data = {
+        'user_id': user_id,
+        'name': 'dave',
+        'email': 'bdd@gmail.com'
+    }
 
-print(divide_numbers2())
+    extra = request.args.get('extra')
+    extra2 = request.args.get('extra2')
+    if extra:
+        user_data['extra'] = extra
+    if extra2:
+        user_data['extra2'] = extra2
+
+    return jsonify(user_data), 200
+
+@app.route('/create-user', methods=['POST'])
+def create_user():
+    data = request.get_json()
+
+    return jsonify(data), 201
+
+
+if __name__ == "__main__":
+    app.run(debug=True)
